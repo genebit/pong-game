@@ -11,8 +11,8 @@ game_sprites = {
 }
 
 class Game:
-    WIDTH = 637  
-    HEIGHT = 301
+    WIDTH = 693  
+    HEIGHT = 364
     window_size = WIDTH, HEIGHT
 
     def __init__(self, pygame, sprites):
@@ -25,7 +25,8 @@ class Game:
 
         # Sprites loaded
         board_img = self.pygame.image.load(self.sprites['board'])
-    
+        player1_img = self.pygame.image.load(self.sprites['player'])
+
         while True:
             
             # Show Game Here...
@@ -40,10 +41,10 @@ class Game:
 
             self.pygame.display.update() 
 
-    def show_board(self, board_img_path):
+    def show_board(self, board_img):
         screen = self.pygame.display.set_mode(self.window_size)
-        screen.blit(board_img_path, (0, 0))
-
+        screen.blit(board_img, (0, 0))
+        
 if __name__ == '__main__':
     Game(pygame, game_sprites)
     
