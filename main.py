@@ -1,3 +1,6 @@
+from pygame import Vector2
+
+
 try:
     import pygame
 except ImportError as err:
@@ -30,8 +33,10 @@ class Game:
         while True:
             
             # Show Game Here...
+            self.screen = self.pygame.display.set_mode(self.window_size)
             self.show_board(board_img)
-
+            self.show_player1(player1_img)
+            
             # Quit the program...
             for event in self.pygame.event.get():
                 if event.type == self.pygame.QUIT: 
@@ -41,10 +46,12 @@ class Game:
 
             self.pygame.display.update() 
 
-    def show_board(self, board_img):
-        screen = self.pygame.display.set_mode(self.window_size)
-        screen.blit(board_img, (0, 0))
+    def show_board(self, img):
+        self.screen.blit(img, Vector2(0, 0))
         
+    def show_player1(self, img):
+        self.screen.blit(img, Vector2(0, 0))
+
 if __name__ == '__main__':
     Game(pygame, game_sprites)
     
