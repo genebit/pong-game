@@ -61,9 +61,9 @@ class Game:
         self.screen.blit(img, Vector2(0, 0))
         
     def show_player1(self, img):
-        img.get_rect()
-        img.center = (100, 100)
-        self.screen.blit(img, Vector2(60, 0))
+        rect = img.get_rect()
+        rect.center = pygame.Vector2(65, self.screen.get_height()/2)
+        self.screen.blit(img, rect)
 
     def quit_handler(self, event):
         if event.type == self.pygame.QUIT: 
