@@ -37,9 +37,9 @@ class Game:
             self.show_board(board_img)
             self.show_player1(player1_img)
             
-            player1_input = None
             for event in self.pygame.event.get():
                 # Input Keys...
+                
                 if event.type == self.pygame.KEYDOWN: # This handles all the key pressed input
                     if event.key == self.pygame.K_w:
                         print('w pressed')
@@ -48,7 +48,7 @@ class Game:
                 
                 if event.type == self.pygame.KEYUP: # This handles all the key released input
                     if event.key == self.pygame.K_w:
-                        print('w released')
+                        print('w released')  
                     if event.key == self.pygame.K_s:
                         print('s released')
                         
