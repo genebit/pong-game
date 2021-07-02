@@ -1,8 +1,6 @@
-from pygame import Vector2
-
-
 try:
     import pygame
+    from pygame import Vector2
 except ImportError as err:
     print('Import Error occured. \n Error Log: {0}'.format(err))
 
