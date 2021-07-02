@@ -4,7 +4,7 @@ import pygame
 
 pygame.init()
 
-img = pygame.image.load('./test.png')
+img = pygame.image.load('./test/cat.png')
 
 while True:
 
