@@ -16,7 +16,7 @@ SPEED = 5
 class Game:
     def __init__(self, width, height):
         WINDOW = pygame.display.set_mode((width, height))
-
+        
         # Sprite Properties
         BALL = pygame.image.load(assets['ball'])
         BALL_START_POS_X = WINDOW.get_width()/2
