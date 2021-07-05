@@ -8,7 +8,7 @@ HEIGHT = 500
 GREEN = (95, 255, 89)
 
 pygame.init()
-CAT_PATH = pygame.image.load('./test/cat.png') # Convert it to Surface
+CAT_PATH = pygame.image.load('./test/img/happy.png') # Convert it to Surface
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT)) # Set the Window Size
 
