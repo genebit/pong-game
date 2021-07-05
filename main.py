@@ -63,7 +63,7 @@ class PongGame:
 
         player1_position = pygame.image.load(GAME_SPRITES['player']).get_rect()
         player1_position.center = (PLAYER1_START_POS_X, PLAYER1_START_POS_y)
-        return PLAYER1,player1_position
+        return PLAYER1, player1_position
 
     def player2_properties(self):
         PLAYER2 = pygame.image.load(GAME_SPRITES['player'])
@@ -72,20 +72,21 @@ class PongGame:
 
         player2_position = pygame.image.load(GAME_SPRITES['player']).get_rect()
         player2_position.center = (PLAYER2_START_POS_X, PLAYER2_START_POS_y)
-        return PLAYER2,player2_position
+        return PLAYER2, player2_position
 
+    # FIXME: make sure to create a better constraints for bounds instead of hardcoding numbers
     def player1_movement_input(self, player1_position, key_pressed):
-        if key_pressed[pygame.K_w]:
+        if key_pressed[pygame.K_w] and not player1_position.y == 39:
             player1_position.y -= SPEED
-        if key_pressed[pygame.K_s]:
+        if key_pressed[pygame.K_s] and not player1_position.y == 244:
             player1_position.y += SPEED
 
     def player2_movement_input(self, player2_position, key_pressed):
-        if key_pressed[pygame.K_o]:
+        if key_pressed[pygame.K_o] and not player2_position.y == 39:
             player2_position.y -= SPEED
-        if key_pressed[pygame.K_l]:
+        if key_pressed[pygame.K_l] and not player2_position.y == 244:
             player2_position.y += SPEED
-
+        print(player2_position.y)
 if __name__ == '__main__':
     PongGame()
     
