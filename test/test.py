@@ -1,41 +1,35 @@
 
 import pygame
 
-# TODO: Colliders
+# TODO: Colliders to not go out of bounds and bounce the ball
 
-def draw_objects(window):
-    img = pygame.image.load('./test/img/happy.png')
+FPS = 60
+WIDTH = 350
+HEIGHT = 300
 
-    img_rect = img.get_rect()
-    mouse_x, mouse_y = pygame.mouse.get_pos()
-    img_rect.center = (mouse_x, mouse_y)
+pygame.init()
 
-    window.blit(img, img_rect)
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    RED = (250, 54, 40)
-    pygame.draw.rect(window, RED, img_rect, 2)
+# Sprites
+ball = pygame.image.load('./img/ball.png')
+position = ball.get_rect()
+position.center = (window.get_width()/2, window.get_height()/2)
 
+bounds = pygame.Rect(0, 0, 300, 250)
+bounds.center = (window.get_width()/2, window.get_height()/2)
+
+# Main loop
+clock = pygame.time.Clock()
+while True:
+    clock.tick(FPS)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            quit()
     
-def main():
+    window.fill((26, 26, 26)) # Fill to black
+
+    pygame.draw.rect(window, (245, 72, 66), bounds, 3)
     
-    WINDOW = pygame.display.set_mode((500, 400))
-
-    clock = pygame.time.Clock()
-    running = True
-    while running:
-        clock.tick(60)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
-        # Draw Here
-        BLACK = (26, 26, 26)
-        WINDOW.fill(BLACK)
-
-        draw_objects(WINDOW)
-        pygame.display.update()
-
-if __name__ == '__main__':
-    print('Running Test')
-    main()
+    window.blit(ball, position)
+    pygame.display.update()
