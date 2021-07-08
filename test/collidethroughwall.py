@@ -10,7 +10,7 @@ WINDOW_SIZE = (400, 300)
 pygame.init()
 
 box = pygame.Rect(0, 0, 100, 100)
-wall = pygame.Rect(0, 0, 2, 200)
+wall = pygame.Rect(0, 0, 5, 200)
 
 def main():
     WINDOW = pygame.display.set_mode(WINDOW_SIZE)
@@ -29,7 +29,7 @@ def main():
         pygame.draw.rect(WINDOW, (255, 255, 255), box, 4)
         
         wall.center = (50, WINDOW.get_height()/2)
-        pygame.draw.rect(WINDOW, (255, 255, 255), wall, 3)
+        pygame.draw.rect(WINDOW, (255, 255, 255), wall)
         
         collide = wall.colliderect(box)
 
