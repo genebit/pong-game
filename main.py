@@ -1,92 +1,61 @@
 
+# TODO:
+'''
+    move the players
+    add constraints to the movement
+    add the ball
+'''
+
 import pygame
 import sys
+import random
 
-from pygame.image import load
-
-GAME_SPRITES = {
-    'ball': './sprites/ball/ball.png',
-    'board': './sprites/board/board.png',
-    'player': './sprites/player/player.png',
-    'ui': './sprites/ui/'
+SPRITES = {
+    "player": "./sprites/player/player.png",
+    "ball": "./sprites/ball/ball.png",
+    "board": "./sprites/board/board.png",
 }
 
-FPS = 60
-WIDTH = 693  
-HEIGHT = 364
-SPEED = 5
-
 class PongGame:
-    
-    def __init__(self):
+
+    def __init__(self, width, height, fps):
         pygame.init()
-        pygame.display.set_caption('Pong Game')
+
+        # Set the Window Properties
+        self.WINDOW = pygame.display.set_mode((width, height))
+        pygame.display.set_caption('Classic Pong Game')
+
+        # Load the Images
+        board = pygame.image.load(SPRITES['board'])
+        self.player1 = pygame.image.load(SPRITES['player'])
+        self.player2 = pygame.image.load(SPRITES['player'])
+        self.ball = pygame.image.load(SPRITES['ball'])
         
-        WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-
-        BOARD = pygame.image.load(GAME_SPRITES['board'])
-
-        # Player 1 
-        PLAYER1, player1_position = self.player1_properties()
-
-        # Player 2
-        PLAYER2, player2_position = self.player2_properties()
-
         # Game Loop
-        clock = pygame.time.Clock()
         running = True
+
+        clock = pygame.time.Clock()
         while running:
-            clock.tick(FPS)
+            clock.tick(fps)
             for event in pygame.event.get():
-                # Quit Handler
                 if event.type == pygame.QUIT:
-                    running = False
                     sys.exit()
+            
+            # Draw Here
+            self.WINDOW.blit(board, (0, 0))
+            
+            self.player1.center = (50, self.WINDOW.get_height()/2)
 
-                # Player 1 Movement Input
-                key_pressed = pygame.key.get_pressed()
-                self.player1_movement_input(player1_position, key_pressed)
-                self.player2_movement_input(player2_position, key_pressed)
-
-            # Draw Objects here...
-            WINDOW.blit(BOARD, (0, 0)) # Draw the Board
-
-            # Draw Player1
-            WINDOW.blit(PLAYER1, player1_position)
-            WINDOW.blit(PLAYER2, player2_position)
             pygame.display.update()
-
-    def player1_properties(self):
-        PLAYER1 = pygame.image.load(GAME_SPRITES['player'])
-        PLAYER1_START_POS_X = 70
-        PLAYER1_START_POS_y = HEIGHT/2
-
-        player1_position = pygame.image.load(GAME_SPRITES['player']).get_rect()
-        player1_position.center = (PLAYER1_START_POS_X, PLAYER1_START_POS_y)
-        return PLAYER1, player1_position
-
-    def player2_properties(self):
-        PLAYER2 = pygame.image.load(GAME_SPRITES['player'])
-        PLAYER2_START_POS_X = 623
-        PLAYER2_START_POS_y = HEIGHT/2
-
-        player2_position = pygame.image.load(GAME_SPRITES['player']).get_rect()
-        player2_position.center = (PLAYER2_START_POS_X, PLAYER2_START_POS_y)
-        return PLAYER2, player2_position
-
-    # FIXME: make sure to create a better constraints for bounds instead of hardcoding numbers
-    def player1_movement_input(self, player1_position, key_pressed):
-        if key_pressed[pygame.K_w] and not player1_position.y == 39:
-            player1_position.y -= SPEED
-        if key_pressed[pygame.K_s] and not player1_position.y == 244:
-            player1_position.y += SPEED
-
-    def player2_movement_input(self, player2_position, key_pressed):
-        if key_pressed[pygame.K_o] and not player2_position.y == 39:
-            player2_position.y -= SPEED
-        if key_pressed[pygame.K_l] and not player2_position.y == 244:
-            player2_position.y += SPEED
-        print(player2_position.y)
-if __name__ == '__main__':
-    PongGame()
     
+    def player1_properties(self, position_x, position_y, speed):
+        self.player1 = pygame.get_rect()
+        self.player1.center = (50, self.WINDOW.get_height()/2)
+        
+        
+if __name__ == '__main__':
+    FPS = 60
+    WINDOW_WIDTH = 600
+    WINDOW_HEIGHT = 400
+    
+    PongGame(WINDOW_WIDTH, WINDOW_HEIGHT, FPS)
