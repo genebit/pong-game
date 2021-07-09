@@ -4,8 +4,7 @@ import random
 import time
 
 FPS = 60
-WINDOW_WIDTH, WINDOW_HEIGHT = (600, 300 )
-BLACK = (20, 20, 20)
+WINDOW_WIDTH, WINDOW_HEIGHT = (600, 400)
 WHITE = (255, 255, 255)
 
 PLAYER_SPEED = 5
@@ -14,11 +13,12 @@ BALL_SPEED = [8, 8]
 
 pygame.init()
 
-# Where The main loop, main properties...
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Pong Game')
 
-# Load Images...
+# Game Objects Images...
+BOARD = pygame.image.load('./sprites/board.png')
+
 PLAYER1 = pygame.Rect(0, 0, 15, 50)
 PLAYER1.center = (50, WINDOW_HEIGHT/2)
 
@@ -26,10 +26,9 @@ PLAYER2 = pygame.Rect(0, 0, 15, 50)
 PLAYER2.center = (550, WINDOW_HEIGHT/2)
 
 BALL = pygame.Rect(0, 0, 15, 15)
-BALL.center = (WINDOW_WIDTH/2, random.randint(30, 370))
+BALL.center = (WINDOW_WIDTH/2, random.randint(50, 350))
 
-# Main Loop...
-clock = pygame.time.Clock()
+CLOCK = pygame.time.Clock()
 
 def p1_movement_input(player1):
     global PLAYER_SPEED, P1_VELOCITY
@@ -57,46 +56,52 @@ def p2_movement_input(player2):
         P2_VELOCITY = [0, 0]
     return P2_VELOCITY
 
+# Main Loop...
 while True:
-    clock.tick(FPS)
+    CLOCK.tick(FPS)
     for event in pygame.event.get():
         if event.type == pygame.QUIT: # Quit Handler...
             sys.exit()
 
     # Draw Here...
-    WINDOW.fill(BLACK)
-    
-    # region ball
+    WINDOW.blit(BOARD, (0, 0))
+
+# region ball
     BALL = BALL.move(BALL_SPEED)
-    p1_collide = BALL.colliderect(PLAYER1)
-    p2_collide = BALL.colliderect(PLAYER2)
 
-    if BALL.left < 0 or BALL.right > WINDOW_WIDTH or p1_collide or p2_collide: # Checks if the collider hits the window border
-        BALL_SPEED[0] = -BALL_SPEED[0] # Converts the speed to move negative to bounce back
+    P1_COLLIDED = BALL.colliderect(PLAYER1)
+    P2_COLLIDED = BALL.colliderect(PLAYER2)
 
-    if BALL.top < 0 or BALL.bottom > WINDOW_HEIGHT or p1_collide or p2_collide:
+    # Checks if the collider hits the border
+    # Converts the speed to move negative to bounce back
+    if BALL.left < 0 or BALL.right > WINDOW_WIDTH or P1_COLLIDED or P2_COLLIDED: 
+        BALL_SPEED[0] = -BALL_SPEED[0] 
+    if BALL.top < 0 or BALL.bottom > WINDOW_HEIGHT or P1_COLLIDED or P2_COLLIDED:
         BALL_SPEED[1] = -BALL_SPEED[1]
 
     # Verdict
-    if BALL.left < 0:
+    p1_hitbounds = BALL.left < 0
+    p2_hitbounds = BALL.right > WINDOW_WIDTH
+    
+    if p1_hitbounds:
         BALL.center = (WINDOW_WIDTH/2, random.randint(20, 380))
         time.sleep(1)
-
-    elif BALL.right > WINDOW_WIDTH:
+    elif p2_hitbounds:
         BALL.center = (WINDOW_WIDTH/2, random.randint(20, 380))
         time.sleep(1)
         
-    pygame.draw.rect(WINDOW, WHITE, BALL, 3)
-    # endregion
-
+    pygame.draw.rect(WINDOW, WHITE, BALL)
+# endregion
+    
     # Players
     P1_VELOCITY = p1_movement_input(PLAYER1)
     P2_VELOCITY = p2_movement_input(PLAYER2)
     
     PLAYER1 = PLAYER1.move(P1_VELOCITY)
-    pygame.draw.rect(WINDOW, WHITE, PLAYER1, 3)
+    pygame.draw.rect(WINDOW, WHITE, PLAYER1)
 
     PLAYER2 = PLAYER2.move(P2_VELOCITY)
-    pygame.draw.rect(WINDOW, WHITE, PLAYER2, 3)
+    pygame.draw.rect(WINDOW, WHITE, PLAYER2)
+
 
     pygame.display.update()
