@@ -3,4 +3,8 @@ Create a verdict when they lose
 
 Fix:
     Pause the game when they lose and show text
-    then a key to press to restart
+    then a key to press to restart the object's position
+
+Bugs:
+    When the player and the ball collide at the same position... the ball
+    sometimes gets stuck.
