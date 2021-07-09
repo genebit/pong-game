@@ -8,7 +8,7 @@ speed = [random.randint(5, 15), random.randint(5, 15)]
 
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
-ball = pygame.Rect(0, 0, 50, 50)
+ball = pygame.Rect(0, 0, 40, 40)
 
 clock = pygame.time.Clock()
 while True:
@@ -26,6 +26,6 @@ while True:
         speed[1] = -speed[1]
 
     WINDOW.fill((26, 26, 26))
-    pygame.draw.rect(WINDOW, (255, 255, 255), ball)
+    pygame.draw.rect(WINDOW, (255, 255, 255), ball, 3)
     
     pygame.display.update()
