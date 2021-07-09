@@ -9,7 +9,6 @@ WINDOW_WIDTH, WINDOW_HEIGHT = (600, 400)
 WHITE = (255, 255, 255)
 
 PLAYER_SPEED = 5
-PLAYER_SIZE = (15, 50)
 P1_VELOCITY = [0, PLAYER_SPEED]
 P2_VELOCITY = [0, PLAYER_SPEED]
 
@@ -23,10 +22,10 @@ pygame.display.set_caption('Pong Game')
 # Game Objects...
 BOARD = pygame.image.load('./sprites/board.png')
 
-PLAYER1 = pygame.Rect(0, 0, PLAYER_SIZE)
+PLAYER1 = pygame.Rect(0, 0, 15, 50)
 PLAYER1.center = (50, WINDOW_HEIGHT/2)
 
-PLAYER2 = pygame.Rect(0, 0, PLAYER_SIZE)
+PLAYER2 = pygame.Rect(0, 0, 15, 50)
 PLAYER2.center = (550, WINDOW_HEIGHT/2)
 
 BALL = pygame.Rect(0, 0, 15, 15)
