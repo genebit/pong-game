@@ -1,11 +1,3 @@
-
-# TODO:
-'''
-    move the players
-    add constraints to the movement
-    add the ball
-'''
-
 import pygame
 import sys
 import random
@@ -18,38 +10,50 @@ SPRITES = {
 
 FPS = 60
 WINDOW_WIDTH, WINDOW_HEIGHT = 600, 400 
+PLAYER_SPEED = [0, 0]
 
 pygame.init()
 
+# Where The main loop, main properties...
+WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption('Pong Game')
+
 # Load Images...
-BOARD = pygame.image.load(SPRITES['board'])
-PLAYER1 = pygame.image.load(SPRITES['player'])
+PLAYER1 = pygame.Rect(0, 0, 15, 60)
+PLAYER1.center = (50, WINDOW.get_height()/2)
 
-def draw_objects(window):
-    window.blit(BOARD, (0, 0))
+# Main Loop...
+clock = pygame.time.Clock()
 
-    PLAYER1_RECT = PLAYER1.get_rect()
-    PLAYER1_RECT.center = (60, window.get_height()/2)
+def p1_movement_input(window, player1):
+    # Key input
+    keypressed = pygame.key.get_pressed()
+    if keypressed[pygame.K_w] and not keypressed[pygame.K_s]:
+        PLAYER_SPEED = [0, -5] if player1.top > 0 else [0, 0]
+
+    elif keypressed[pygame.K_s] and not keypressed[pygame.K_w]:
+        PLAYER_SPEED = [0, 5] if player1.bottom < window.get_height() else [0, 0]
+        
+    else:
+        PLAYER_SPEED = [0, 0]
+
+    return PLAYER_SPEED
+
+while True:
+    clock.tick(FPS)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: # Quit Handler...
+            sys.exit()
+
+    PLAYER_SPEED = p1_movement_input(WINDOW, PLAYER1)
+
+    # Draw Here...
+    BLACK = (20, 20, 20)
+    WHITE = (255, 255, 255)
+
+    WINDOW.fill(BLACK)
     
-    window.blit(PLAYER1, PLAYER1_RECT)
+    PLAYER1 = PLAYER1.move(PLAYER_SPEED)
 
-def main():
-    # Where The main loop, main properties...
-    WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    pygame.display.set_caption('Pong Game')
-    
-    # Main Loop...
-    clock = pygame.time.Clock()
-    while True:
-        clock.tick(FPS)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: # Quit Handler...
-                sys.exit()
-
-        # Draw Here...
-        draw_objects(WINDOW)
-
-        pygame.display.update()
-
-if __name__ == '__main__':
-    main()
+    pygame.draw.rect(WINDOW, WHITE, PLAYER1, 3)
+    pygame.display.update()
