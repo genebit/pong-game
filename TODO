@@ -1,0 +1,6 @@
+Create small sprites
+Create a verdict when they lose
+
+Fix:
+    Pause the game when they lose and show text
+    then a key to press to restart
