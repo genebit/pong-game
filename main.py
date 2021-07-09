@@ -3,12 +3,16 @@ import sys
 import random 
 import time
 
+# Adjustable Parameters
 FPS = 60
 WINDOW_WIDTH, WINDOW_HEIGHT = (600, 400)
 WHITE = (255, 255, 255)
 
 PLAYER_SPEED = 5
+PLAYER_SIZE = (15, 50)
 P1_VELOCITY = [0, PLAYER_SPEED]
+P2_VELOCITY = [0, PLAYER_SPEED]
+
 BALL_SPEED = [8, 8]
 
 pygame.init()
@@ -16,19 +20,18 @@ pygame.init()
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Pong Game')
 
-# Game Objects Images...
+# Game Objects...
 BOARD = pygame.image.load('./sprites/board.png')
 
-PLAYER1 = pygame.Rect(0, 0, 15, 50)
+PLAYER1 = pygame.Rect(0, 0, PLAYER_SIZE)
 PLAYER1.center = (50, WINDOW_HEIGHT/2)
 
-PLAYER2 = pygame.Rect(0, 0, 15, 50)
+PLAYER2 = pygame.Rect(0, 0, PLAYER_SIZE)
 PLAYER2.center = (550, WINDOW_HEIGHT/2)
 
 BALL = pygame.Rect(0, 0, 15, 15)
 BALL.center = (WINDOW_WIDTH/2, random.randint(50, 350))
 
-CLOCK = pygame.time.Clock()
 
 def p1_movement_input(player1):
     global PLAYER_SPEED, P1_VELOCITY
@@ -44,7 +47,7 @@ def p1_movement_input(player1):
     return P1_VELOCITY
 
 def p2_movement_input(player2):
-    global PLAYER_SPEED, P1_VELOCITY
+    global PLAYER_SPEED, P2_VELOCITY
 
     keypressed = pygame.key.get_pressed()
 
@@ -56,6 +59,7 @@ def p2_movement_input(player2):
         P2_VELOCITY = [0, 0]
     return P2_VELOCITY
 
+CLOCK = pygame.time.Clock()
 # Main Loop...
 while True:
     CLOCK.tick(FPS)
@@ -79,17 +83,17 @@ while True:
     if BALL.top < 0 or BALL.bottom > WINDOW_HEIGHT or P1_COLLIDED or P2_COLLIDED:
         BALL_SPEED[1] = -BALL_SPEED[1]
 
-    # Verdict
+    # region Verdict
     p1_hitbounds = BALL.left < 0
     p2_hitbounds = BALL.right > WINDOW_WIDTH
     
     if p1_hitbounds:
         BALL.center = (WINDOW_WIDTH/2, random.randint(20, 380))
-        time.sleep(1)
+        # time.sleep(1)
     elif p2_hitbounds:
         BALL.center = (WINDOW_WIDTH/2, random.randint(20, 380))
-        time.sleep(1)
-        
+        # time.sleep(1)
+    # endregion
     pygame.draw.rect(WINDOW, WHITE, BALL)
 # endregion
     
