@@ -12,12 +12,12 @@ PLAYER_SPEED = 8
 P1_VELOCITY = [0, PLAYER_SPEED]
 P2_VELOCITY = [0, PLAYER_SPEED]
 
-BALL_SPEED = [8, 8]
+BALL_SPEED = [random.randint(3, 5), random.randint(3, 5)]
 
 pygame.init()
 
 # Sounds------------
-PRESS = pygame.mixer.Sound('./sound/Press.wav')
+PADDLE = pygame.mixer.Sound('./sound/Paddle.wav')
 SCORE = pygame.mixer.Sound('./sound/Score.wav')
 HIT = pygame.mixer.Sound('./sound/Hit.wav')
 
@@ -89,7 +89,7 @@ while True:
                     PLAYER1.center = (50, WINDOW_HEIGHT/2)
                     PLAYER2.center = (550, WINDOW_HEIGHT/2)
 
-                    PRESS.play()
+                    PADDLE.play()
                     time.sleep(0.5)
                 else:
                     paused = True
@@ -101,20 +101,26 @@ while True:
     if not paused:
             # Keep moving
         BALL = BALL.move(BALL_SPEED)
-
+ 
         P1_COLLIDED = BALL.colliderect(PLAYER1)
         P2_COLLIDED = BALL.colliderect(PLAYER2)
 
         # Checks if the collider hits the border
         # Converts the speed to move negative to bounce back
-        if BALL.left < 0 or BALL.right > WINDOW_WIDTH or P1_COLLIDED or P2_COLLIDED: 
+        if BALL.left < 0 or BALL.right > WINDOW_WIDTH: 
             BALL_SPEED[0] = -BALL_SPEED[0] 
             HIT.play()
 
-        if BALL.top < 0 or BALL.bottom > WINDOW_HEIGHT or P1_COLLIDED or P2_COLLIDED:
+        if BALL.top < 0 or BALL.bottom > WINDOW_HEIGHT:
             BALL_SPEED[1] = -BALL_SPEED[1]
             HIT.play()
         
+        # Player Paddle Collide
+        if P1_COLLIDED or P2_COLLIDED:
+            BALL_SPEED[0] = -BALL_SPEED[0] + BALL_SPEED[1]
+            BALL_SPEED[1] = -BALL_SPEED[1] + BALL_SPEED[0]
+            PADDLE.play()
+
         # Game Over
         if BALL.left < 0 or BALL.right > WINDOW_WIDTH:
             paused = True
