@@ -19,22 +19,24 @@ pygame.init()
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Pong Game')
 
-# Game Objects...
-BOARD = pygame.image.load('./sprites/board.png')
-
-PLAYER1 = pygame.Rect(0, 0, 15, 50)
+PLAYER1 = pygame.Rect(0, 0, 20, 60)
 PLAYER1.center = (50, WINDOW_HEIGHT/2)
 
-PLAYER2 = pygame.Rect(0, 0, 15, 50)
+PLAYER2 = pygame.Rect(0, 0, 20, 60)
 PLAYER2.center = (550, WINDOW_HEIGHT/2)
 
-BALL = pygame.Rect(0, 0, 15, 15)
+BALL = pygame.Rect(0, 0, 20, 20)
 BALL.center = (WINDOW_WIDTH/2, random.randint(50, 350))
 
-font = pygame.font.Font('freesansbold.ttf', 30)
-text = font.render('GAME OVER. Press P to Restart', True, (255, 255, 255))
-text_rect = text.get_rect()
-text_rect.center = (WINDOW_WIDTH/2, WINDOW_HEIGHT/2)
+FONT = pygame.font.Font('./font/Welbut.ttf', 30)
+
+game_over_txt = FONT.render('GAME OVER', True, (255, 255, 255))
+game_over_rect = game_over_txt.get_rect()
+game_over_rect.center = (WINDOW_WIDTH/2, (WINDOW_HEIGHT/2)-20)
+
+notes = FONT.render("Press 'P' to Restart", True, (255, 255, 255))
+notes_rect = notes.get_rect()
+notes_rect.center = (WINDOW_WIDTH/2, game_over_rect.bottom+20)
 
 def p1_movement_input(player1):
     global PLAYER_SPEED, P1_VELOCITY
@@ -85,7 +87,7 @@ while True:
                     paused = True
 
     # Draw Here...
-    WINDOW.blit(BOARD, (0, 0))
+    WINDOW.fill((26, 26, 26))
 
 # region ball
     if not paused:
@@ -107,11 +109,10 @@ while True:
         if BALL.top < 0 or BALL.bottom > WINDOW_HEIGHT:
             paused = False
 
-        pygame.draw.rect(WINDOW, WHITE, BALL)
+        pygame.draw.rect(WINDOW, WHITE, BALL, 3)
     else:
-        WINDOW.blit(text, text_rect)
-            
-
+        WINDOW.blit(game_over_txt, game_over_rect)
+        WINDOW.blit(notes, notes_rect)
 # endregion
     
     # Players
@@ -119,10 +120,9 @@ while True:
     P2_VELOCITY = p2_movement_input(PLAYER2)
     
     PLAYER1 = PLAYER1.move(P1_VELOCITY)
-    pygame.draw.rect(WINDOW, WHITE, PLAYER1)
+    pygame.draw.rect(WINDOW, WHITE, PLAYER1, 3)
 
     PLAYER2 = PLAYER2.move(P2_VELOCITY)
-    pygame.draw.rect(WINDOW, WHITE, PLAYER2)
-
+    pygame.draw.rect(WINDOW, WHITE, PLAYER2, 3)
 
     pygame.display.update()
