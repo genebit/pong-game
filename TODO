@@ -2,10 +2,12 @@
 [DONE] Create a verdict when they lose
 [DONE] Add Sounds
 
+[???] Refactor and Clean the damn code!
+
 Fix:
     [DONE] Pause the game when they lose and show text
     [DONE] then a key to press to restart the object's position
 
 Bugs:
-    When the player and the ball collide at the same position... the ball
-    sometimes gets stuck.
+    [???] When the player and the ball collide at the same position... the ball
+          sometimes gets stuck.
