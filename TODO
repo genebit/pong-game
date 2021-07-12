@@ -2,8 +2,8 @@
 [DONE] Create a verdict when they lose
 [DONE] Add Sounds
 
-[???] Refactor and Clean the damn code!
-[???] Do it in a OOP way
+[DONE] Refactor and Clean the damn code!
+[DONE] Make the code OOP
 
 Fix:
     [DONE] Pause the game when they lose and show text
